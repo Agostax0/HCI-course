@@ -119,11 +119,11 @@
       			<div :class="$style.mynauimapSolidParent">
         				<img :class="$style.mynauimapSolidIcon" src="../assets/images/map.svg" alt="" />
         				<img :class="$style.mynauiflowerSolidIcon" src="../assets/images/flower.svg" alt="" @click="onTextContentTitleClick" />
-        				<img :class="$style.mynauishoppingBagSolidIcon" src="../assets/images/backpack.svg" alt="" @click="onTextContentTitleClick" />
+        				<img :class="$style.mynauishoppingBagSolidIcon" src="../assets/images/shoppingBagSolid.svg" alt="" @click="onTextContentTitleClick" />
         				<img :class="$style.mynauimapSolidIcon" src="../assets/images/bivacco.svg" alt="" />
         				<img :class="$style.mynauimapSolidIcon" src="../assets/images/avatar.svg" alt="" />
       			</div>
-      			<img :class="$style.mynauishoppingBagSolidIcon2" alt="" @click="onTextContentTitleClick" />
+      			<img :class="$style.mynauishoppingBagSolidIcon2" src="../assets/images/shoppingBagSolid.svg" alt="" @click="onTextContentTitleClick" />
     		</div>
   	</div>
 </template>
