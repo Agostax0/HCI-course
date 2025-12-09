@@ -1,22 +1,10 @@
 <script setup lang="ts">
-import EquipmentWeather from './views/EquipmentWeather.vue';
+import CheckList from './views/CheckList.vue';
 </script>
 
 <template>
-  <EquipmentWeather/>
+  <CheckList />
 </template>
 
 <style>
-/* Since your component has a fixed width of 393px (mobile layout),
-  this centers it on the screen for better viewing on desktop.
-*/
-
-#app {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background-color: #f0f0f0; /* Optional: grey background to see the phone frame */
-}
-
 </style>
