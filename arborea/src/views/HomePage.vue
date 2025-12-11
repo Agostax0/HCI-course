@@ -1,62 +1,81 @@
+<script setup lang="ts">
+import type { RouterLink } from 'vue-router'
+
+function onGroupContainerClick() {
+    // Add your code here
+}
+</script>
+
 <template>
     <div :class="$style.hero2">
         <div :class="$style.textContentTitle">
             <b :class="$style.title">Arborea</b>
             <div :class="$style.subtitle">You are what you discover.</div>
         </div>
-        <div :class="$style.rectangleParent" @click="onGroupContainerClick">
-            <div :class="$style.groupChild" />
-            <div :class="$style.textContentHeading">
-                <div :class="$style.heading">Bivouac</div>
-                <div :class="$style.subheading">Look for bivacchi.</div>
-            </div>
-        </div>
-        <div :class="$style.rectangleGroup" @click="onGroupContainerClick">
-            <div :class="$style.groupChild" />
-            <div :class="$style.textContentHeading">
-                <div :class="$style.heading">Watching</div>
-                <div :class="$style.subheading">Nature with you.</div>
-            </div>
-        </div>
-        <div :class="$style.rectangleContainer">
-            <div :class="$style.groupChild" />
-            <div :class="$style.textContentHeading">
-                <div :class="$style.heading">Planning</div>
-                <div :class="$style.subheading">Plan you trek.</div>
-            </div>
-        </div>
-        <div :class="$style.groupDiv" @click="onGroupContainerClick">
-            <div :class="$style.groupChild" />
-            <div :class="$style.textContentHeading4">
-                <div :class="$style.heading">Equipment</div>
-                <div :class="$style.subheading">Ready to start.</div>
-            </div>
-        </div>
-        <div :class="$style.groupParent">
-            <div :class="$style.rectangleWrapper">
+        <RouterLink to="/bivouac/">
+            <div :class="$style.rectangleParent" @click="onGroupContainerClick">
                 <div :class="$style.groupChild" />
+                <div :class="$style.textContentHeading">
+                    <div :class="$style.heading">Bivouac</div>
+                    <div :class="$style.subheading">Look for bivacchi.</div>
+                </div>
+                <img :class="$style.mynauilocationHomeSolidIcon" src="../assets/images/menu-items/bivouac.svg" alt="" @click="onGroupContainerClick" />
             </div>
-            <div :class="$style.textContentHeading5">
-                <div :class="$style.heading">Mates</div>
-                <div :class="$style.subheading">Let mates help you.</div>
+        </RouterLink>
+        <RouterLink to="/watching/">
+            <div :class="$style.rectangleGroup" @click="onGroupContainerClick">
+                <div :class="$style.textContentHeading">
+                    <div :class="$style.heading">Watching</div>
+                    <div :class="$style.subheading">Nature with you.</div>
+                </div>
+                <img :class="$style.mynauiflowerSolidIcon" src="../assets/images/menu-items/watching.svg" alt="" />
             </div>
-        </div>
-        <img :class="$style.mynauilocationHomeSolidIcon" src="../assets/images/bivacco.svg" alt=""
-            @click="onGroupContainerClick" />
-        <img :class="$style.mynauiflowerSolidIcon" src="../assets/images/flower.svg" alt="" />
-        <img :class="$style.mynauishoppingBagSolidIcon" src="../assets/images/map.svg" alt=""
-            @click="onGroupContainerClick" />
-        <img :class="$style.mynauifaceIdSolidIcon" src="../assets/images/avatar.svg" alt="" />
-        <img :class="$style.mynauimapSolidIcon" src="../assets/images/map.svg" alt="" />
+        </RouterLink>
+        <div :class="$style.groupChild" />
+        <RouterLink to="/planning/">
+            <div :class="$style.rectangleContainer">
+                <div :class="$style.groupChild" />
+                <div :class="$style.textContentHeading">
+                    <div :class="$style.heading">Planning</div>
+                    <div :class="$style.subheading">Plan you trek.</div>
+                </div>
+                <img :class="$style.mynauimapSolidIcon" src="../assets/images/menu-items/planning.svg"alt="" />
+            </div>
+        </RouterLink>
+        <RouterLink to="/equipment/">
+            <div :class="$style.groupDiv" @click="onGroupContainerClick">
+                <div :class="$style.groupChild" />
+                <div :class="$style.textContentHeading4">
+                    <div :class="$style.heading">Equipment</div>
+                    <div :class="$style.subheading">Ready to start.</div>
+                </div>
+                <img :class="$style.mynauishoppingBagSolidIcon" src="../assets/images/menu-items/equipment.svg" alt=""
+                    @click="onGroupContainerClick" />
+            </div>
+        </RouterLink>
+        <RouterLink to="/mates/">
+            <div :class="$style.groupParent">
+                <div :class="$style.rectangleWrapper">
+                    <div :class="$style.groupChild" />
+                </div>
+                <div :class="$style.textContentHeading5">
+                    <div :class="$style.heading">Mates</div>
+                    <div :class="$style.subheading">Let mates help you.</div>
+                </div>
+                <img :class="$style.mynauimapSolidIcon" src="../assets/images/menu-items/mates.svg" alt="" />
+            </div>
+        </RouterLink>
     </div>
 </template>
-<script setup lang="ts">
 
-
-function onGroupContainerClick() {
-    // Add your code here
-}</script>
 <style module>
+
+div.heading {
+    color: black !important;
+    text-decoration: none !important;
+    accent-color: black !important;
+}
+
 .hero2 {
     width: 100%;
     height: 852px;
@@ -157,6 +176,15 @@ function onGroupContainerClick() {
     color: #757575;
 }
 
+.mynauilocationHomeSolidIcon {
+    position: absolute;
+    top: 19px;
+    left: 20px;
+    width: 64px;
+    height: 64px;
+    cursor: pointer;
+}
+
 .rectangleGroup {
     position: absolute;
     top: 403px;
@@ -170,6 +198,14 @@ function onGroupContainerClick() {
     background-color: rgba(255, 255, 255, 0.6);
 }
 
+.mynauiflowerSolidIcon {
+    position: absolute;
+    top: 11px;
+    left: 20px;
+    width: 64px;
+    height: 64px;
+}
+
 .rectangleContainer {
     position: absolute;
     top: 506px;
@@ -180,6 +216,14 @@ function onGroupContainerClick() {
     backdrop-filter: blur(4px);
     border-radius: 48px;
     background-color: rgba(255, 255, 255, 0.6);
+}
+
+.mynauimapSolidIcon {
+    position: absolute;
+    top: 13px;
+    left: 24px;
+    width: 64px;
+    height: 64px;
 }
 
 .groupDiv {
@@ -205,6 +249,15 @@ function onGroupContainerClick() {
     flex-direction: column;
     align-items: flex-start;
     gap: 8px;
+}
+
+.mynauishoppingBagSolidIcon {
+    position: absolute;
+    top: 13px;
+    left: 20px;
+    width: 64px;
+    height: 64px;
+    cursor: pointer;
 }
 
 .groupParent {
@@ -237,47 +290,5 @@ function onGroupContainerClick() {
     flex-direction: column;
     align-items: flex-start;
     gap: 8px;
-}
-
-.mynauilocationHomeSolidIcon {
-    position: absolute;
-    top: 319px;
-    left: 47px;
-    width: 64px;
-    height: 64px;
-    cursor: pointer;
-}
-
-.mynauiflowerSolidIcon {
-    position: absolute;
-    top: 414px;
-    left: 47px;
-    width: 64px;
-    height: 64px;
-}
-
-.mynauishoppingBagSolidIcon {
-    position: absolute;
-    top: 622px;
-    left: 47px;
-    width: 64px;
-    height: 64px;
-    cursor: pointer;
-}
-
-.mynauifaceIdSolidIcon {
-    position: absolute;
-    top: 725px;
-    left: 51px;
-    width: 64px;
-    height: 64px;
-}
-
-.mynauimapSolidIcon {
-    position: absolute;
-    top: 519px;
-    left: 51px;
-    width: 64px;
-    height: 64px;
 }
 </style>
