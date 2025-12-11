@@ -6,16 +6,18 @@ COPY arborea/package.json .
 
 RUN npm install
 
-RUN npm i -g serve
+# RUN npm i -g serve
 
 COPY . .
 
-WORKDIR arborea/
+# WORKDIR arborea/
 
-RUN npm run build
+# RUN npm run build
 
-EXPOSE 3000
+EXPOSE 5173
 
-CMD ["serve", "-s", "dist"] 
+CMD ["npm", "run", "dev" , "--", "--host"]
+
+# CMD ["serve", "-s", "dist"] 
 
 #docker build -t arborea . && docker run -it --rm -p 3000:3000 arborea sh
