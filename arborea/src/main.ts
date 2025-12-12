@@ -5,10 +5,10 @@ import App from '@/App.vue'
 import HomePage from './views/HomePage.vue'
 
 import EquipmentHome from './views/equipment/EquipmentHome.vue'
-import EquipmentWeather from './views/equipment/EquipmentWeather.vue'
-import EquipmentFood from './views/equipment/EquipmentFood.vue'
-import EquipmentMisc from './views/equipment/EquipmentMisc.vue'
-import EquipmentVirtualBag from './views/equipment/EquipmentVirtualBag.vue'
+import EquipmentWeather from './views/equipment/weather/EquipmentWeather.vue'
+import EquipmentFood from './views/equipment/food/EquipmentFood.vue'
+import EquipmentMisc from './views/equipment/misc/EquipmentMisc.vue'
+import EquipmentVirtualBag from './views/equipment/virtual-bag/EquipmentVirtualBag.vue'
 
 import MatesHome from './views/mates/MatesHome.vue'
 
