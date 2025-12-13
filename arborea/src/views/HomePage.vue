@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import type { RouterLink } from 'vue-router'
 
-function onGroupContainerClick() {
-    // Add your code here
-}
 </script>
 
 <template>
@@ -13,22 +10,22 @@ function onGroupContainerClick() {
             <div :class="$style.subtitle">You are what you discover.</div>
         </div>
         <RouterLink to="/bivouac/">
-            <div :class="$style.rectangleParent" @click="onGroupContainerClick">
+            <div :class="$style.rectangleParent" >
                 <div :class="$style.groupChild" />
                 <div :class="$style.textContentHeading">
                     <div :class="$style.heading">Bivouac</div>
                     <div :class="$style.subheading">Look for bivacchi.</div>
                 </div>
-                <img :class="$style.mynauilocationHomeSolidIcon" src="../assets/images/menu-items/bivouac.svg" alt="" @click="onGroupContainerClick" />
+                <img :class="$style.mynauilocationHomeSolidIcon" src="@/assets/images/menu-items/bivouac.svg" alt="" @click="onGroupContainerClick" />
             </div>
         </RouterLink>
         <RouterLink to="/watching/">
-            <div :class="$style.rectangleGroup" @click="onGroupContainerClick">
+            <div :class="$style.rectangleGroup" >
                 <div :class="$style.textContentHeading">
                     <div :class="$style.heading">Watching</div>
                     <div :class="$style.subheading">Nature with you.</div>
                 </div>
-                <img :class="$style.mynauiflowerSolidIcon" src="../assets/images/menu-items/watching.svg" alt="" />
+                <img :class="$style.mynauiflowerSolidIcon" src="@/assets/images/menu-items/watching.svg" alt="" />
             </div>
         </RouterLink>
         <div :class="$style.groupChild" />
@@ -39,18 +36,18 @@ function onGroupContainerClick() {
                     <div :class="$style.heading">Planning</div>
                     <div :class="$style.subheading">Plan you trek.</div>
                 </div>
-                <img :class="$style.mynauimapSolidIcon" src="../assets/images/menu-items/planning.svg"alt="" />
+                <img :class="$style.mynauimapSolidIcon" src="@/assets/images/menu-items/planning.svg"alt="" />
             </div>
         </RouterLink>
         <RouterLink to="/equipment/">
-            <div :class="$style.groupDiv" @click="onGroupContainerClick">
+            <div :class="$style.groupDiv" >
                 <div :class="$style.groupChild" />
                 <div :class="$style.textContentHeading4">
                     <div :class="$style.heading">Equipment</div>
                     <div :class="$style.subheading">Ready to start.</div>
                 </div>
-                <img :class="$style.mynauishoppingBagSolidIcon" src="../assets/images/menu-items/equipment.svg" alt=""
-                    @click="onGroupContainerClick" />
+                <img :class="$style.mynauishoppingBagSolidIcon" src="@/assets/images/menu-items/equipment.svg" alt=""
+                 />
             </div>
         </RouterLink>
         <RouterLink to="/mates/">
@@ -62,7 +59,7 @@ function onGroupContainerClick() {
                     <div :class="$style.heading">Mates</div>
                     <div :class="$style.subheading">Let mates help you.</div>
                 </div>
-                <img :class="$style.mynauimapSolidIcon" src="../assets/images/menu-items/mates.svg" alt="" />
+                <img :class="$style.mynauimapSolidIcon" src="@/assets/images/menu-items/mates.svg" alt="" />
             </div>
         </RouterLink>
     </div>
@@ -178,7 +175,7 @@ div.heading {
 
 .mynauilocationHomeSolidIcon {
     position: absolute;
-    top: 19px;
+    top: 15px;
     left: 20px;
     width: 64px;
     height: 64px;
@@ -200,7 +197,7 @@ div.heading {
 
 .mynauiflowerSolidIcon {
     position: absolute;
-    top: 11px;
+    top: 15px;
     left: 20px;
     width: 64px;
     height: 64px;

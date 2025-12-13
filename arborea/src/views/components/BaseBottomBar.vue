@@ -1,30 +1,4 @@
-<script setup lang="ts">
-import type { RouterLink } from 'vue-router';
-
-
-</script>
-
-<template>
-    <div :class="$style.iconParent">
-        <RouterLink to="/planning/">
-            <img :class="$style.mynauimapSolidIcon" src="../../assets/images/menu-items/planning.svg" alt="" />
-        </RouterLink>
-        <RouterLink to="/watching/">
-            <img :class="$style.mynauimapSolidIcon" src="../../assets/images/menu-items/watching.svg" alt="" />
-        </RouterLink>
-        <RouterLink to="/equipment/">
-            <img :class="$style.mynauimapSolidIcon" src="../../assets/images/menu-items/equipment.svg"
-                alt="" />
-        </RouterLink>
-        <RouterLink to="/bivouac/">
-            <img :class="$style.mynauimapSolidIcon" src="../../assets/images/menu-items/bivouac.svg" alt="" />
-        </RouterLink>
-        <RouterLink to="/mates/">
-            <img :class="$style.mynauimapSolidIcon" src="../../assets/images/menu-items/mates.svg" alt="" />
-        </RouterLink>
-    </div>
-</template>
-<style module>
+<style scoped>
 .iconParent {
     width: 100%;
     height: 80px;
@@ -43,12 +17,37 @@ import type { RouterLink } from 'vue-router';
     width: 64px;
     position: relative;
     max-height: 100%;
+    cursor: pointer;
 }
 
-.mynauiflowerSolidIcon {
+.mynauilocationHomeSolidIcon {
+    height: 64px;
     width: 64px;
     position: relative;
-    max-height: 100%;
     cursor: pointer;
 }
 </style>
+<template>
+    <div class="iconParent">
+        <RouterLink to="/planning/">
+            <img class="mynauimapSolidIcon" src="@/assets/images/menu-items/planning.svg" alt="" />
+        </RouterLink>
+        <RouterLink to="/watching/">
+            <img class="mynauimapSolidIcon" src="@/assets/images/menu-items/watching.svg" alt="" />
+        </RouterLink>
+        <RouterLink to="/equipment/">
+            <img class="mynauimapSolidIcon" src="@/assets/images/menu-items/equipment.svg" alt="" />
+        </RouterLink>
+        <RouterLink to="/bivouac/">
+            <img class="mynauilocationHomeSolidIcon" src="@/assets/images/menu-items/bivouac.svg" alt="" />
+        </RouterLink>
+        <RouterLink to="/mates/">
+            <img class="mynauimapSolidIcon" src="@/assets/images/menu-items/mates.svg" alt="" />
+        </RouterLink>
+    </div>
+</template>
+<script setup lang="ts">
+import type { RouterLink } from 'vue-router';
+console.log("bottom bar mounted")
+
+</script>
