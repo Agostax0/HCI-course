@@ -1,12 +1,77 @@
+<script lang="ts">
+const styles = [
+    "image11Icon",
+    "image11Icon2",
+    "image11Icon3",
+    "image11Icon4",
+    "image11Icon5",
+    "image11Icon6",
+    "image11Icon7"
+]
+const imagesFromCookie: string[] = getImagesFromCookie().slice(0, styles.length);
+
+const toExport:
+    {
+        src: string;
+        style: string;
+        visibile: boolean;
+    }[] = []
+
+for (let i = 0; i < styles.length; i++) {
+    const img = imagesFromCookie[i];
+    const style = styles[i];
+    if (img && style) {
+        toExport.push({
+            src: new URL('@', import.meta.url).href + img,
+            style: style,
+            visibile: true
+        });
+    }
+}
+
+export default {
+    data() {
+        return {
+            images: toExport
+        }
+    }
+}
+
+const dragStartHandler = (event: DragEvent, index: number): void => {
+    if(event.dataTransfer)
+        event.dataTransfer.setData('index', index.toString());
+};
+
+const dragOverHandler = (event: DragEvent): void => {
+};
+
+const dragLeaveHandler = (event: DragEvent): void => {
+  // Optional: Add visual feedback when leaving the drop zone
+};
+
+const dropHandler = (event: DragEvent): void => {
+    console.log('drop')
+    if(event.dataTransfer){
+        const id = event.dataTransfer.getData('index')
+
+        const element = document.getElementById(id);
+
+        if(element)
+            element.style.visibility = 'hidden';
+    }
+};
+</script>
 <template>
     <div :class="$style.equipmentVirtualBag">
         <div :class="$style.pageTitle">
             <div :class="$style.textContentTitle">
                 <b :class="$style.title">Don’t forget it</b>
             </div>
-            <div :class="$style.iconButton">
-                <img :class="$style.skipForwardIcon" src="@/assets/images/menu-items/skip-forward.svg" alt="" />
-            </div>
+            <RouterLink to="/">
+                <div :class="$style.iconButton">
+                    <img :class="$style.skipForwardIcon" src="@/assets/images/menu-items/skip-forward.svg" alt="" />
+                </div>
+            </RouterLink>
         </div>
         <div :class="$style.mynauimapSolidParent">
             <BaseBottomBar />
@@ -20,33 +85,106 @@
             <img :class="$style.middleLeftShelf" src="@/assets/images/equipment-items/shelf.png" alt="" />
         </div>
         <div id="items">
-            <img :class="$style.image11Icon" src="@/assets/images/equipment-items/torchlight.png" alt="" />
-            <img :class="$style.image11Icon2" src="@/assets/images/equipment-items/water-bottle.png"alt="" />
-            <img :class="$style.image11Icon3" src="@/assets/images/equipment-items/umbrella.svg"alt="" />
-            <img :class="$style.image11Icon4" src="@/assets/images/equipment-items/compass.png"alt="" />
-            <img :class="$style.image11Icon5" src="@/assets/images/equipment-items/snowGoggles.svg"alt="" />
-            <img :class="$style.image11Icon6" src="@/assets/images/equipment-items/gloves.svg"alt="" />
-            <img :class="$style.image11Icon7" src="@/assets/images/equipment-items/bug-repellent.png"alt="" />
+            <img v-for="(image, index) in images" :key="index" :src="image.src" :class="image.style"
+                :alt="image.alt || 'image'" draggable="true" :id="index" @dragstart="dragStartHandler($event, index)" />
         </div>
-        
         <div id="bag">
-            <img :class="$style.image21Icon" src="@/assets/images/equipment-items/backpack.png" alt="" />
+            <img :class="$style.image21Icon" src="@/assets/images/equipment-items/backpack.png" alt=""
+                @dragover.prevent="dragOverHandler" @dragleave="dragLeaveHandler" @drop.prevent="dropHandler" />
         </div>
     </div>
 </template>
 <script setup lang="ts">
+import { getImagesFromCookie } from '@/util/ImageUtil';
 import BaseBottomBar from '@/views/components/BaseBottomBar.vue';
+import { ref } from 'vue';
+import type { RouterLink } from 'vue-router';
 
 </script>
-<style module>
-div > #items{
+
+<style lang="css" scoped>
+#items>img {
     position: relative;
     z-index: 2;
 }
 
-div > #shelves{
+.image11Icon {
+    position: absolute;
+    top: 180px;
+    left: 34px;
+    width: 46px;
+    height: 46px;
+    object-fit: cover;
+}
+
+.image11Icon2 {
+    position: absolute;
+    top: 240px;
+    left: 33px;
+    width: 46px;
+    height: 46px;
+    object-fit: cover;
+}
+
+.image11Icon3 {
+    position: absolute;
+    top: 320px;
+    left: 180px;
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+}
+
+.image11Icon4 {
+    position: absolute;
+    top: 241px;
+    left: 105px;
+    width: 46px;
+    height: 46px;
+    object-fit: cover;
+}
+
+.image11Icon5 {
+    position: absolute;
+    top: 337px;
+    left: -143px;
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+}
+
+.image11Icon6 {
+    position: absolute;
+    top: 341px;
+    left: 44px;
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+}
+
+.image11Icon7 {
+    position: absolute;
+    top: 157px;
+    left: -49px;
+    width: 46px;
+    height: 46px;
+    object-fit: cover;
+}
+</style>
+
+<style module>
+div>#shelves {
     position: relative;
     z-index: 1;
+}
+
+.image21Icon {
+    position: absolute;
+    top: 476px;
+    left: 55px;
+    width: 281px;
+    height: 281px;
+    object-fit: cover;
 }
 
 .equipmentVirtualBag {
@@ -131,26 +269,6 @@ div > #shelves{
     gap: 5px;
 }
 
-.mynauimapSolidIcon {
-    width: 64px;
-    position: relative;
-    max-height: 100%;
-}
-
-.mynauiflowerSolidIcon {
-    width: 64px;
-    position: relative;
-    max-height: 100%;
-    cursor: pointer;
-}
-
-.mynauilocationHomeSolidIcon {
-    height: 64px;
-    width: 64px;
-    position: relative;
-    cursor: pointer;
-}
-
 .bottomRightShelf {
     position: absolute;
     top: 316px;
@@ -208,77 +326,5 @@ div > #shelves{
     height: 160px;
     object-fit: contain;
     transform: scaleX(-1);
-}
-
-.image11Icon {
-    position: absolute;
-    top: 197px;
-    left: 34px;
-    width: 46px;
-    height: 46px;
-    object-fit: cover;
-}
-
-.image11Icon2 {
-    position: absolute;
-    top: 268px;
-    left: 33px;
-    width: 46px;
-    height: 46px;
-    object-fit: cover;
-}
-
-.image11Icon3 {
-    position: absolute;
-    top: 332px;
-    left: 303px;
-    width: 64px;
-    height: 64px;
-    object-fit: cover;
-}
-
-.image11Icon4 {
-    position: absolute;
-    top: 261px;
-    left: 85px;
-    width: 46px;
-    height: 46px;
-    object-fit: cover;
-}
-
-.image11Icon5 {
-    position: absolute;
-    top: 250px;
-    left: 262px;
-    width: 64px;
-    height: 64px;
-    object-fit: cover;
-}
-
-.image11Icon6 {
-    position: absolute;
-    top: 334px;
-    left: 48px;
-    width: 64px;
-    height: 64px;
-    object-fit: cover;
-}
-
-.image11Icon7 {
-    position: absolute;
-    top: 183px;
-    left: 288px;
-    width: 46px;
-    height: 46px;
-    object-fit: cover;
-}
-
-.image21Icon {
-    position: absolute;
-    top: 476px;
-    left: 55px;
-    width: 281px;
-    height: 281px;
-    object-fit: cover;
 }
 </style>
