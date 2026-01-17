@@ -24,3 +24,5 @@ cd A5/
 ```bash
 docker compose up
 ```
+
+4. The web-server will now be available [here](http://localhost:5173)
