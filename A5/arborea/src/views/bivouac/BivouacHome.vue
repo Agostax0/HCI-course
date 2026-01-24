@@ -1,5 +1,4 @@
 <template>
-    <template>
   	<div :class="$style.bivouac2">
     		<div :class="$style.bivouac2Child" />
     		<img :class="$style.mynauilocationHomeSolidIcon" alt="" @click="onMynauilocationHomeSolidClick" />
@@ -17,18 +16,21 @@
         				<b :class="$style.title">Bivouac</b>
       			</div>
     		</div>
-            <ProductCard v-if="showPopup" @close="showPopup = false" />
+            <BivouacCard v-if="showPopup" @close="showPopup = false" />
   	</div>
 </template>
+
 <script setup lang="ts">
 import { ref } from 'vue'
-import ProductCard from './ProductCard.vue'
+import BivouacCard from './BivouacCard.vue'
 
 const showPopup = ref(false) 	
   	
   	function onMynauilocationHomeSolidClick() {
     		showPopup.value = true
-  	}</script>
+  	}
+
+</script>
 <style  module>.bivouac2 {
   	width: 100%;
   	height: 852px;
@@ -137,52 +139,4 @@ const showPopup = ref(false)
   	}
 
 </style>
-</template>
 
-<template>
-  <div class="overlay" @click.self="$emit('close')">
-    <div class="popup">
-      <div :class="$style.productInfoCard">
-        <!-- QUI dentro rimane uguale il tuo markup -->
-        <img :class="$style.imageIcon" alt="" />
-        <div :class="$style.body">
-          <div :class="$style.text">
-            <div :class="$style.text2">Bivacco “Ciglio”</div>
-          </div>
-          <div :class="$style.imageFcuczibomwyfiephpsaknmvdParent">
-            <img :class="$style.imageFcuczibomwyfiephpsaknmvdIcon" alt="" />
-            <div :class="$style.textStrong">
-              <div :class="$style.textStrong2">4</div>
-            </div>
-            <img :class="$style.imageFcuczibomwyfiephpsaknmvdIcon" alt="" />
-            <div :class="$style.textStrong">
-              <div :class="$style.textStrong2">1</div>
-            </div>
-            <img :class="$style.imageFcuczibomwyfiephpsaknmvdIcon" alt="" />
-            <div :class="$style.textStrong">
-              <div :class="$style.textStrong2">800mt</div>
-            </div>
-          </div>
-          <div :class="$style.textSmall" @click="$emit('close')">
-            <div :class="$style.textSmall2">Close</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</template>
-
-<style scoped>
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.3);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 50;
-}
-.popup {
-  z-index: 60;
-}
-</style>
