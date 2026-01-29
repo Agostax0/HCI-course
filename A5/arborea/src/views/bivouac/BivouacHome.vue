@@ -1,9 +1,10 @@
 <template>
   	<div :class="$style.bivouac2">
+			<img :class="$style.background" src="@/assets/wallpaper-maps.png" />
     		<div :class="$style.bivouac2Child" />
-    		<img :class="$style.mynauilocationHomeSolidIcon" alt="" @click="onMynauilocationHomeSolidClick" />
-    		<img :class="$style.mynauilocationHomeSolidIcon2" alt="" @click="onMynauilocationHomeSolidClick" />
-    		<img :class="$style.mynauilocationHomeSolidIcon3" alt="" @click="onMynauilocationHomeSolidClick" />
+    		<img :class="$style.mynauilocationHomeSolidIcon" src="@/assets/mini-home.png" alt="" @click="onMynauilocationHomeSolidClick" />
+    		<img :class="$style.mynauilocationHomeSolidIcon2" src="@/assets/mini-home.png" alt="" @click="onMynauilocationHomeSolidClick" />
+    		<img :class="$style.mynauilocationHomeSolidIcon3" src="@/assets/mini-home.png" alt="" @click="onMynauilocationHomeSolidClick" />
     		<div :class="$style.mynauimapSolidParent">
       			<img :class="$style.mynauimapSolidIcon" alt="" />
       			<img :class="$style.mynauiflowerSolidIcon" alt="" @click="onMynauilocationHomeSolidClick" />
@@ -17,12 +18,17 @@
       			</div>
     		</div>
             <BivouacCard v-if="showPopup" @close="showPopup = false" />
+		 <div :class="$style.mynauimapSolidParent">
+            <BaseBottomBar />
+        </div>
   	</div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import BivouacCard from './BivouacCard.vue'
+import { RouterLink, useRouter } from "vue-router";
+import BaseBottomBar from "@/views/components/BaseBottomBar.vue";
 
 const showPopup = ref(false) 	
   	
