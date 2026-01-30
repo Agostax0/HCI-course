@@ -27,8 +27,7 @@ import type { RouterLink } from 'vue-router'
                 </div>
                 <img :class="$style.mynauiflowerSolidIcon" src="@/assets/images/menu-items/watching.svg" alt="" />
             </div>
-        </RouterLink>
-        <div :class="$style.groupChild" />
+        </RouterLink> 
         <RouterLink to="/planning/">
             <div :class="$style.rectangleContainer">
                 <div :class="$style.groupChild" />
