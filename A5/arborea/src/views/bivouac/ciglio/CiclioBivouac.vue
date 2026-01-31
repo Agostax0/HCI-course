@@ -104,7 +104,8 @@ function showPopupListener() {
 
     top: 0px;
     left: 0px;
-    /* box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);*/
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    background-color: #EAFFED;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
