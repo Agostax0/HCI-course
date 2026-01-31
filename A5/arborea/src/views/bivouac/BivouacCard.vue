@@ -25,7 +25,9 @@
 						</div>
 					</div>
 					<div :class="$style.textSmall" @click="$emit('close')">
-						<div :class="$style.textSmall2">More info</div>
+						<RouterLink to="/bivouac/ciglio/">
+							<div :class="$style.textSmall2">More info</div>
+						</RouterLink>						
 					</div>
 				</div>
 

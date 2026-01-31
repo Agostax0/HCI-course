@@ -17,6 +17,7 @@ import WatchingHome from './views/watching/WatchingHome.vue'
 import BivouacHome from './views/bivouac/BivouacHome.vue'
 
 import PlanningHome from './views/planning/PlanningHome.vue'
+import CiclioBivouac from './views/bivouac/ciglio/CiclioBivouac.vue'
 
 const routes = [
     { path: '/' , component: HomePage},
@@ -35,6 +36,7 @@ const routes = [
 
     { path: '/mates/' , component: MatesHome},
 
+    { path: '/bivouac/ciglio', component: CiclioBivouac}
 ]
 
 const router = createRouter({

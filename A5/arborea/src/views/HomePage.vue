@@ -16,7 +16,7 @@ import type { RouterLink } from 'vue-router'
                     <div :class="$style.heading">Bivouac</div>
                     <div :class="$style.subheading">Look for bivacchi.</div>
                 </div>
-                <img :class="$style.mynauilocationHomeSolidIcon" src="@/assets/images/menu-items/bivouac.svg" alt="" @click="onGroupContainerClick" />
+                <img :class="$style.mynauilocationHomeSolidIcon" src="@/assets/images/menu-items/bivouac.svg" alt="" />
             </div>
         </RouterLink>
         <RouterLink to="/watching/">
