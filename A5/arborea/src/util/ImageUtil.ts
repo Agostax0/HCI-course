@@ -22,18 +22,18 @@ function saveImagesToCookie(images: string[]): void {
     document.cookie = `selectedImages=${encodeURIComponent(JSON.stringify(images))}; expires=${expiryDate.toUTCString()}; path=/`;
 }
 
-function addImageToCookie(event: Event): void {
-    const imgElement = event.target as HTMLImageElement;
-    const imgSrc = imgElement.src;
+function addImageToCookie(src: string): void {
+    const imgSrc = src;
 
-    const currentImages = getImagesFromCookie();
+    var currentImages = getImagesFromCookie();
 
     if (!currentImages.includes(imgSrc)) {
         currentImages.push(imgSrc);
         saveImagesToCookie(currentImages);
         console.log('Image added to cookie:', imgSrc);
     } else {
-        console.log('Image already in cookie:', imgSrc);
+        currentImages = currentImages.filter(src => !(src === imgSrc));
+        console.log('Image removed from cookie:', imgSrc);
     }
 }
 
