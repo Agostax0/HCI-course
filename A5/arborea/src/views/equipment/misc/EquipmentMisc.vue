@@ -26,7 +26,7 @@
             </div>
             <RouterLink to="/equipment/virtual-bag/">
             <div :class="$style.iconButton">
-                <img :class="$style.checkIcon" alt="" src="@/assets/images/menu-items/done.png"/>
+                <img :class="$style.checkIcon" alt="" src="@/assets/images/menu-items/done.svg"/>
             </div>
             </RouterLink>
         </div>
