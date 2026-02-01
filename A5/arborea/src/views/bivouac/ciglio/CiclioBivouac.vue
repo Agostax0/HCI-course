@@ -76,7 +76,6 @@ const showPopup = ref(false)
 
 function showPopupListener() {
 	showPopup.value = !showPopup.value
-    console.log("prova")
 }
 
 </script>

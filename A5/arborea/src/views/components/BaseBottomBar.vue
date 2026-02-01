@@ -48,6 +48,5 @@
 </template>
 <script setup lang="ts">
 import type { RouterLink } from 'vue-router';
-console.log("bottom bar mounted")
 
 </script>
