@@ -132,11 +132,22 @@
                 </div>
             </div>
             <div :class="$style.mynauimapSolidParent">
-                <img :class="$style.mynauimapSolidIcon" alt="" src="@/assets/images/menu-items/planning.svg" />
-                <img :class="$style.mynauiflowerSolidIcon" alt="" src="@/assets/images/menu-items/watching.svg" />
-                <img :class="$style.mynauishoppingBagSolidIcon" alt="" />
-                <img :class="$style.mynauilocationHomeSolidIcon" alt="" src="@/assets/images/menu-items/bivouac.svg" />
-                <img :class="$style.mynauimapSolidIcon" alt="" src="@/assets/images/menu-items/mates.svg" />
+                <RouterLink to="/planning/">
+                    <img :class="$style.mynauimapSolidIcon" alt="" src="@/assets/images/menu-items/planning.svg" />
+                </RouterLink>
+                <RouterLink to="/watching/">
+                    <img :class="$style.mynauiflowerSolidIcon" alt="" src="@/assets/images/menu-items/watching.svg" />
+                </RouterLink>
+                <RouterLink to="/equipment/">
+                    <img :class="$style.mynauishoppingBagSolidIcon" alt="" />
+                </RouterLink>
+                <RouterLink to="/bivouac/">
+                    <img :class="$style.mynauilocationHomeSolidIcon" alt=""
+                        src="@/assets/images/menu-items/bivouac.svg" />
+                </RouterLink>
+                <RouterLink to="/mates/">
+                    <img :class="$style.mynauimapSolidIcon" alt="" src="@/assets/images/menu-items/mates.svg" />
+                </RouterLink>
             </div>
             <img :class="$style.mynauishoppingBagSolidIcon2" alt="" src="@/assets/images/menu-items/equipment.svg" />
         </div>

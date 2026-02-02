@@ -16,7 +16,7 @@
                 <div :class="$style.textContentTitle2" />
             </div>
             <div :class="$style.component2">
-                <img :class="$style.image1Icon" alt="" src="@/assets/images/equipment-items/radio.png"/>
+                <img :class="$style.image1Icon" alt="" src="@/assets/images/equipment-items/radio.png" />
                 <div :class="$style.textContentTitle4" />
             </div>
         </div>
@@ -25,9 +25,9 @@
                 <b :class="$style.title2">Equipment</b>
             </div>
             <RouterLink to="/equipment/virtual-bag/">
-            <div :class="$style.iconButton">
-                <img :class="$style.checkIcon" alt="" src="@/assets/images/menu-items/done.svg"/>
-            </div>
+                <div :class="$style.iconButton">
+                    <img :class="$style.checkIcon" alt="" src="@/assets/images/menu-items/done.svg" />
+                </div>
             </RouterLink>
         </div>
         <div :class="$style.toBringList">
@@ -125,28 +125,39 @@
                 <div :class="$style.component52">
                     <RouterLink to="/equipment/weather/">
 
-                    <div :class="$style.textContentTitle14" >
-                        <div :class="$style.title">Weather</div>
-                    </div>
+                        <div :class="$style.textContentTitle14">
+                            <div :class="$style.title">Weather</div>
+                        </div>
                     </RouterLink>
                     <RouterLink to="/equipment/food/">
-                    <div :class="$style.textContentTitle15" >
-                        <div :class="$style.title3">Food</div>
-                    </div>
+                        <div :class="$style.textContentTitle15">
+                            <div :class="$style.title3">Food</div>
+                        </div>
                     </RouterLink>
                     <RouterLink to="/equipment/misc/">
-                    <div :class="$style.textContentTitle16" >
-                        <div :class="$style.title13">Misc</div>
-                    </div>
+                        <div :class="$style.textContentTitle16">
+                            <div :class="$style.title13">Misc</div>
+                        </div>
                     </RouterLink>
                 </div>
             </div>
             <div :class="$style.mynauimapSolidParent">
-                <img :class="$style.mynauimapSolidIcon" alt="" src="@/assets/images/menu-items/planning.svg" />
-                <img :class="$style.mynauiflowerSolidIcon" alt="" src="@/assets/images/menu-items/watching.svg" />
-                <img :class="$style.mynauishoppingBagSolidIcon" alt="" />
-                <img :class="$style.mynauilocationHomeSolidIcon" alt="" src="@/assets/images/menu-items/bivouac.svg" />
-                <img :class="$style.mynauimapSolidIcon" alt="" src="@/assets/images/menu-items/mates.svg" />
+                <RouterLink to="/planning/">
+                    <img :class="$style.mynauimapSolidIcon" alt="" src="@/assets/images/menu-items/planning.svg" />
+                </RouterLink>
+                <RouterLink to="/watching/">
+                    <img :class="$style.mynauiflowerSolidIcon" alt="" src="@/assets/images/menu-items/watching.svg" />
+                </RouterLink>
+                <RouterLink to="/equipment/">
+                    <img :class="$style.mynauishoppingBagSolidIcon" alt="" />
+                </RouterLink>
+                <RouterLink to="/bivouac/">
+                    <img :class="$style.mynauilocationHomeSolidIcon" alt=""
+                        src="@/assets/images/menu-items/bivouac.svg" />
+                </RouterLink>
+                <RouterLink to="/mates/">
+                    <img :class="$style.mynauimapSolidIcon" alt="" src="@/assets/images/menu-items/mates.svg" />
+                </RouterLink>
             </div>
             <img :class="$style.mynauishoppingBagSolidIcon2" alt="" src="@/assets/images/menu-items/equipment.svg" />
         </div>

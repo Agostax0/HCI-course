@@ -25,9 +25,9 @@
                 <b :class="$style.title4">Equipment</b>
             </div>
             <RouterLink to="/equipment/food/">
-            <div :class="$style.iconButton">
-                <img :class="$style.arrowRightIcon" alt="" src="@/assets/images/right-arrow.svg" />
-            </div>
+                <div :class="$style.iconButton">
+                    <img :class="$style.arrowRightIcon" alt="" src="@/assets/images/right-arrow.svg" />
+                </div>
             </RouterLink>
         </div>
         <div :class="$style.toBringList">
@@ -104,8 +104,12 @@
                 <img :class="$style.image11Icon" alt="" />
             </div>-->
             <div :class="$style.listItem" v-for="(image, index) in images" :key="index">
-                <img v-if="!image.isClicked" :class="$style.equipmentCheckBoxIcon" alt="" src="@/assets/images/checkbox.svg" @click.self="addImageToCookie(image.image); image.isClicked = !image.isClicked" />
-                <img v-else :class="$style.equipmentCheckBoxCheckedIcon" alt="" src="@/assets/images/checkbox-checked.png" @click.self="addImageToCookie(image.image); image.isClicked = !image.isClicked" />
+                <img v-if="!image.isClicked" :class="$style.equipmentCheckBoxIcon" alt=""
+                    src="@/assets/images/checkbox.svg"
+                    @click.self="addImageToCookie(image.image); image.isClicked = !image.isClicked" />
+                <img v-else :class="$style.equipmentCheckBoxCheckedIcon" alt=""
+                    src="@/assets/images/checkbox-checked.png"
+                    @click.self="addImageToCookie(image.image); image.isClicked = !image.isClicked" />
 
                 <div :class="$style.equipmentDescriptionAndIcon">
                     <div :class="$style.textContentTitle5">
@@ -136,11 +140,22 @@
                 </div>
             </div>
             <div :class="$style.mynauimapSolidParent">
-                <img :class="$style.mynauimapSolidIcon" alt="" src="@/assets/images/menu-items/planning.svg" />
-                <img :class="$style.mynauiflowerSolidIcon" alt="" src="@/assets/images/menu-items/watching.svg" />
-                <img :class="$style.mynauishoppingBagSolidIcon" alt="" />
-                <img :class="$style.mynauilocationHomeSolidIcon" alt="" src="@/assets/images/menu-items/bivouac.svg" />
-                <img :class="$style.mynauimapSolidIcon" alt="" src="@/assets/images/menu-items/mates.svg" />
+                <RouterLink to="/planning/">
+                    <img :class="$style.mynauimapSolidIcon" alt="" src="@/assets/images/menu-items/planning.svg" />
+                </RouterLink>
+                <RouterLink to="/watching/">
+                    <img :class="$style.mynauiflowerSolidIcon" alt="" src="@/assets/images/menu-items/watching.svg" />
+                </RouterLink>
+                <RouterLink to="/equipment/">
+                    <img :class="$style.mynauishoppingBagSolidIcon" alt="" />
+                </RouterLink>
+                <RouterLink to="/bivouac/">
+                    <img :class="$style.mynauilocationHomeSolidIcon" alt=""
+                        src="@/assets/images/menu-items/bivouac.svg" />
+                </RouterLink>
+                <RouterLink to="/mates/">
+                    <img :class="$style.mynauimapSolidIcon" alt="" src="@/assets/images/menu-items/mates.svg" />
+                </RouterLink>
             </div>
             <img :class="$style.mynauishoppingBagSolidIcon2" alt="" src="@/assets/images/menu-items/equipment.svg" />
         </div>
