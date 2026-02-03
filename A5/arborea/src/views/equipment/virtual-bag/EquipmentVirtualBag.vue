@@ -22,7 +22,7 @@ for (let i = 0; i < styles.length; i++) {
     const style = styles[i];
     if (img && style) {
         toExport.push({
-            src: new URL('@', import.meta.url).href + img,
+            src: /*new URL('@', import.meta.url).href + "/assets/images/equipment-items/"  +*/ img,
             style: style,
             visibile: true
         });
@@ -38,8 +38,10 @@ export default {
 }
 
 const dragStartHandler = (event: DragEvent, index: number): void => {
-    if(event.dataTransfer)
+    if(event.dataTransfer){
+        console.log("picked up" + index);
         event.dataTransfer.setData('index', index.toString());
+    }
 };
 
 const dragOverHandler = (event: DragEvent): void => {
@@ -86,7 +88,7 @@ const dropHandler = (event: DragEvent): void => {
         </div>
         <div id="items">
             <img v-for="(image, index) in images" :key="index" :src="image.src" :class="image.style"
-                :alt="image.alt || 'image'" draggable="true" :id="index" @dragstart="dragStartHandler($event, index)" />
+             draggable="true" :id="index.toString()" @dragstart="dragStartHandler($event, index)" />
         </div>
         <div id="bag">
             <img :class="$style.image21Icon" src="@/assets/images/equipment-items/backpack.png" alt=""
