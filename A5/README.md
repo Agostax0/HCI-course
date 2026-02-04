@@ -49,3 +49,7 @@ npm install && npm run dev
 
 4. The web-server will now be available [here](http://localhost:5173)
 
+## Recommended Viewing Experience
+
+It is highly advised to open the website with an iPhone16 layout (width=393, height=852, device pixel ratio = 3).
+
