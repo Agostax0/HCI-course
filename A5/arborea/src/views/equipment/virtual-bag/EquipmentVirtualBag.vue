@@ -1,50 +1,57 @@
 <script lang="ts">
 import { getImages, getImagesFromCookie } from '@/util/ImageUtil';
-
-var toExport: {
+interface ImageItem {
     src: string;
     style: string;
-    visibile: boolean;
-}[] = [];
+    visible: boolean;
+    isFloating: boolean;
+    targetX: number;
+    targetY: number;
+}
+
 
 export default {
     data() {
         return {
-            images: toExport
+            images: [] as ImageItem[],
+            collectedCount: 0
         }
     },
-    mounted(){
-        this.images = getImages()
+    mounted() {
+        const loadedImages = getImages();
+        this.images = loadedImages.map(img => ({
+            src: img.src,
+            style: img.style,
+            visible: true,
+            isFloating: false,
+            targetX: 0,
+            targetY: 0
+        }));
     },
     methods: {
-        dragStartHandler(event: DragEvent, index: number) {
-            console.log('bro')
-            if (event.dataTransfer) {
-                console.log("picked up" + index);
-                event.dataTransfer.setData('index', index.toString());
-            }
-            else{
-                console.log("no data trasnfer");
-            }
-        },
-        dragOverHandler(event: DragEvent) {
-            event.preventDefault();
-        },
-        dragLeaveHandler(event: DragEvent) {
-            event.preventDefault();
-        },
-        dropHandler(event: DragEvent){
-            console.log('drop')
-            event.preventDefault();
-            if (event.dataTransfer) {
-                const id = event.dataTransfer.getData('index')
+        floatToBag(index: number, event: MouseEvent) {
+            const item = this.images[index];
+            if (!item.visible || item.isFloating) return;
 
-                const element = document.getElementById(id);
+            const bagElement = document.querySelector('#bag img') as HTMLElement;
+            const itemElement = event.target as HTMLElement;
 
-                if (element)
-                    element.style.visibility = 'hidden';
-            }
+            if (!bagElement || !itemElement) return;
 
+            const bagRect = bagElement.getBoundingClientRect();
+            const itemRect = itemElement.getBoundingClientRect();
+
+            // Calculate distance to bag center
+            item.targetX = bagRect.left + bagRect.width / 2 - itemRect.left - itemRect.width / 2;
+            item.targetY = bagRect.top + bagRect.height / 2 - itemRect.top - itemRect.height / 2;
+
+            item.isFloating = true;
+
+            // Remove item after animation completes
+            setTimeout(() => {
+                item.visible = false;
+                this.collectedCount++;
+            }, 1500);
         }
     }
 }
@@ -73,12 +80,18 @@ export default {
             <img :class="$style.middleLeftShelf" src="@/assets/images/equipment-items/shelf.png" alt="" />
         </div>
         <div id="items">
-            <img v-for="(image, index) in images" :key="index" :src="image.src" :class="image.style" draggable="true" alt=""
-                 @dragstart="dragStartHandler($event, index)" />
+            <img v-for="(image, index) in images" :key="index" v-show="image.visible" :src="image.src"
+                :class="[$style.floatingItem, image.style]" :style="{
+                    transform: image.isFloating ? `translate(${image.targetX}px, ${image.targetY}px)` : 'translate(0, 0)',
+                    opacity: image.isFloating ? 0 : 1,
+                    cursor: 'pointer',
+                    transition: 'transform 2s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 2s ease-out',
+                    pointerEvents: image.isFloating ? 'none' : 'auto'
+                }" alt="" @click="floatToBag(index, $event)" />
         </div>
         <div id="bag">
-            <img :class="$style.image21Icon" src="@/assets/images/equipment-items/backpack.png" alt=""
-                @dragover="dragOverHandler" @dragleave="dragLeaveHandler" @drop="dropHandler" />
+            <img :class="$style.image21Icon" src="@/assets/images/equipment-items/backpack.png" alt="" />
+            <!--<span v-if="collectedCount > 0" :class="$style.bagCounter" style="visibility:hidden">{{ collectedCount }}</span>-->
         </div>
     </div>
 </template>
@@ -87,8 +100,37 @@ import BaseBottomBar from '@/views/components/BaseBottomBar.vue';
 </script>
 
 <style lang="css" scoped>
+.floatingItem {
+    transition: transform 5.0s cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 5.0s ease-out;
+}
+
+.floatingItem:hover {
+    transform: scale(1.1) !important;
+}
+
+.bagCounter {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: #ff4444;
+    color: white;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+#bag {
+    /*position: relative;*/
+}
+
 #items>img {
-    position: relative;
+    position: relative !important;
     z-index: 2;
 }
 
