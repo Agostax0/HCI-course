@@ -1,67 +1,53 @@
 <script lang="ts">
-const styles = [
-    "image11Icon",
-    "image11Icon2",
-    "image11Icon3",
-    "image11Icon4",
-    "image11Icon5",
-    "image11Icon6",
-    "image11Icon7"
-]
-const imagesFromCookie: string[] = getImagesFromCookie().slice(0, styles.length);
+import { getImages, getImagesFromCookie } from '@/util/ImageUtil';
 
-const toExport:
-    {
-        src: string;
-        style: string;
-        visibile: boolean;
-    }[] = []
-
-for (let i = 0; i < styles.length; i++) {
-    const img = imagesFromCookie[i];
-    const style = styles[i];
-    if (img && style) {
-        toExport.push({
-            src: /*new URL('@', import.meta.url).href + "/assets/images/equipment-items/"  +*/ img,
-            style: style,
-            visibile: true
-        });
-    }
-}
+var toExport: {
+    src: string;
+    style: string;
+    visibile: boolean;
+}[] = [];
 
 export default {
     data() {
         return {
             images: toExport
         }
+    },
+    mounted(){
+        this.images = getImages()
+    },
+    methods: {
+        dragStartHandler(event: DragEvent, index: number) {
+            console.log('bro')
+            if (event.dataTransfer) {
+                console.log("picked up" + index);
+                event.dataTransfer.setData('index', index.toString());
+            }
+            else{
+                console.log("no data trasnfer");
+            }
+        },
+        dragOverHandler(event: DragEvent) {
+            event.preventDefault();
+        },
+        dragLeaveHandler(event: DragEvent) {
+            event.preventDefault();
+        },
+        dropHandler(event: DragEvent){
+            console.log('drop')
+            event.preventDefault();
+            if (event.dataTransfer) {
+                const id = event.dataTransfer.getData('index')
+
+                const element = document.getElementById(id);
+
+                if (element)
+                    element.style.visibility = 'hidden';
+            }
+
+        }
     }
 }
-
-const dragStartHandler = (event: DragEvent, index: number): void => {
-    if(event.dataTransfer){
-        console.log("picked up" + index);
-        event.dataTransfer.setData('index', index.toString());
-    }
-};
-
-const dragOverHandler = (event: DragEvent): void => {
-};
-
-const dragLeaveHandler = (event: DragEvent): void => {
-  // Optional: Add visual feedback when leaving the drop zone
-};
-
-const dropHandler = (event: DragEvent): void => {
-    console.log('drop')
-    if(event.dataTransfer){
-        const id = event.dataTransfer.getData('index')
-
-        const element = document.getElementById(id);
-
-        if(element)
-            element.style.visibility = 'hidden';
-    }
-};
 </script>
 <template>
     <div :class="$style.equipmentVirtualBag">
@@ -87,21 +73,17 @@ const dropHandler = (event: DragEvent): void => {
             <img :class="$style.middleLeftShelf" src="@/assets/images/equipment-items/shelf.png" alt="" />
         </div>
         <div id="items">
-            <img v-for="(image, index) in images" :key="index" :src="image.src" :class="image.style"
-             draggable="true" :id="index.toString()" @dragstart="dragStartHandler($event, index)" />
+            <img v-for="(image, index) in images" :key="index" :src="image.src" :class="image.style" draggable="true" alt=""
+                 @dragstart="dragStartHandler($event, index)" />
         </div>
         <div id="bag">
             <img :class="$style.image21Icon" src="@/assets/images/equipment-items/backpack.png" alt=""
-                @dragover.prevent="dragOverHandler" @dragleave="dragLeaveHandler" @drop.prevent="dropHandler" />
+                @dragover="dragOverHandler" @dragleave="dragLeaveHandler" @drop="dropHandler" />
         </div>
     </div>
 </template>
 <script setup lang="ts">
-import { getImagesFromCookie } from '@/util/ImageUtil';
 import BaseBottomBar from '@/views/components/BaseBottomBar.vue';
-import { ref } from 'vue';
-import type { RouterLink } from 'vue-router';
-
 </script>
 
 <style lang="css" scoped>

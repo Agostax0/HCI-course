@@ -37,4 +37,44 @@ function addImageToCookie(src: string): void {
     }
 }
 
-export { addImageToCookie, getImagesFromCookie };
+function getImages(): {
+    src: string;
+    style: string;
+    visibile: boolean;
+}[] {
+
+    const toExport:
+    {
+        src: string;
+        style: string;
+        visibile: boolean;
+    }[] = []
+
+    const styles = [
+        "image11Icon",
+        "image11Icon2",
+        "image11Icon3",
+        "image11Icon4",
+        "image11Icon5",
+        "image11Icon6",
+        "image11Icon7"
+    ]
+    const imagesFromCookie: string[] = getImagesFromCookie().slice(0, styles.length);
+
+
+    for (let i = 0; i < styles.length; i++) {
+        const img = imagesFromCookie[i];
+        const style = styles[i];
+        if (img && style) {
+            toExport.push({
+                src: /*new URL('@', import.meta.url).href + "/assets/images/equipment-items/"  +*/ img,
+                style: style,
+                visibile: true
+            });
+        }
+    }
+
+    return toExport;
+}
+
+export { addImageToCookie, getImagesFromCookie, getImages };
