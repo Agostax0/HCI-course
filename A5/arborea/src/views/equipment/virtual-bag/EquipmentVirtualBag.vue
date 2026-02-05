@@ -96,8 +96,8 @@ import BaseBottomBar from '@/views/components/BaseBottomBar.vue';
     position: absolute;
     top: 180px;
     left: 34px;
-    width: 46px;
-    height: 46px;
+    width: 64px;
+    height: 64px;
     object-fit: cover;
 }
 
@@ -105,8 +105,8 @@ import BaseBottomBar from '@/views/components/BaseBottomBar.vue';
     position: absolute;
     top: 240px;
     left: 33px;
-    width: 46px;
-    height: 46px;
+    width: 64px;
+    height: 64px;
     object-fit: cover;
 }
 
@@ -123,8 +123,8 @@ import BaseBottomBar from '@/views/components/BaseBottomBar.vue';
     position: absolute;
     top: 241px;
     left: 105px;
-    width: 46px;
-    height: 46px;
+    width: 64px;
+    height: 64px;
     object-fit: cover;
 }
 
@@ -150,8 +150,8 @@ import BaseBottomBar from '@/views/components/BaseBottomBar.vue';
     position: absolute;
     top: 157px;
     left: -49px;
-    width: 46px;
-    height: 46px;
+    width: 64px;
+    height: 64px;
     object-fit: cover;
 }
 </style>
