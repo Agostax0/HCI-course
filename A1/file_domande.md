@@ -1,9 +1,7 @@
 # Struttura dell'intervista
-### Durata: 
-15/20 minuti
+**Durata:** 15/20 minuti
 
-### Struttura:
-domande predefinite iniziali poi domande sorte durante l'intervista
+**Struttura:** domande predefinite iniziali poi domande sorte durante l'intervista
 
 # Tipologia domande
 **1. Introduzione**
