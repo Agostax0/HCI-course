@@ -31,77 +31,19 @@
             </RouterLink>
         </div>
         <div :class="$style.toBringList">
-            <!--<div :class="$style.listItem" />
-            <div :class="$style.listItem2">
-                <img :class="$style.equipmentCheckBoxIcon" alt="" />
-                <div :class="$style.equipmentDescriptionAndIcon">
-                    <div :class="$style.textContentTitle5">
-                        <div :class="$style.title5">Water bottle</div>
-                    </div>
-                </div>
-                <img :class="$style.image11Icon" alt="" />
-            </div>
-            <div :class="$style.listItem2">
-                <img :class="$style.equipmentCheckBoxIcon" alt="" />
-                <div :class="$style.equipmentDescriptionAndIcon">
-                    <div :class="$style.textContentTitle5">
-                        <div :class="$style.title5">Energy drink</div>
-                    </div>
-                </div>
-                <img :class="$style.image11Icon" alt="" />
-            </div>
-            <div :class="$style.listItem2">
-                <img :class="$style.equipmentCheckBoxIcon" alt="" />
-                <div :class="$style.equipmentDescriptionAndIcon">
-                    <div :class="$style.textContentTitle5">
-                        <div :class="$style.title5">Electrolytes</div>
-                    </div>
-                </div>
-                <img :class="$style.image11Icon" alt="" />
-            </div>
-            <div :class="$style.listItem2">
-                <img :class="$style.equipmentCheckBoxIcon" alt="" />
-                <div :class="$style.equipmentDescriptionAndIcon">
-                    <div :class="$style.textContentTitle5">
-                        <div :class="$style.title5">Protein bar</div>
-                    </div>
-                </div>
-                <img :class="$style.image11Icon" alt="" />
-            </div>
-            <div :class="$style.listItem2">
-                <img :class="$style.equipmentCheckBoxIcon" alt="" />
-                <div :class="$style.equipmentDescriptionAndIcon">
-                    <div :class="$style.textContentTitle5">
-                        <div :class="$style.title5">Mixed nuts</div>
-                    </div>
-                </div>
-                <img :class="$style.image11Icon" alt="" />
-            </div>
-            <div :class="$style.listItem2">
-                <img :class="$style.equipmentCheckBoxIcon" alt="" />
-                <div :class="$style.equipmentDescriptionAndIcon">
-                    <div :class="$style.textContentTitle5">
-                        <div :class="$style.title5">Canned meat</div>
-                    </div>
-                </div>
-                <img :class="$style.image11Icon" alt="" />
-            </div>
-            <div :class="$style.listItem2">
-                <img :class="$style.equipmentCheckBoxIcon" alt="" />
-                <div :class="$style.equipmentDescriptionAndIcon">
-                    <div :class="$style.textContentTitle5">
-                        <div :class="$style.title5">Chewing gum</div>
-                    </div>
-                </div>
-                <img :class="$style.image11Icon" alt="" />
-            </div>-->
             <div :class="$style.listItem2" v-for="(image, index) in images" :key="index">
-                <img v-if="!image.isClicked" :class="$style.equipmentCheckBoxIcon" alt=""
+                <img v-if="!image.isClicked" 
+                    :class="$style.equipmentCheckBoxIcon" 
+                    alt=""
                     src="@/assets/images/checkbox.svg"
-                    @click.self="addImageToCookie(image.image); image.isClicked = !image.isClicked" />
-                <img v-else :class="$style.equipmentCheckBoxCheckedIcon" alt=""
+                    @click="toggleImage(image)" 
+                />
+                <img v-else 
+                    :class="$style.equipmentCheckBoxCheckedIcon" 
+                    alt=""
                     src="@/assets/images/checkbox-checked.png"
-                    @click.self="addImageToCookie(image.image); image.isClicked = !image.isClicked" />
+                    @click="toggleImage(image)" 
+                />
 
                 <div :class="$style.equipmentDescriptionAndIcon">
                     <div :class="$style.textContentTitle5">
@@ -153,40 +95,44 @@
         </div>
     </div>
 </template>
-<script setup lang="ts">
-import { addImageToCookie } from '@/util/ImageUtil';
-console.log("setup");
-</script>
 <script lang="ts">
-console.log("script");
+import { defineComponent } from 'vue';
+import { addImageToCookie, getImagesFromCookie } from '@/util/ImageUtil';
 
-const toExport:
-    {
-        name: string;
-        image: string;
-        isClicked: boolean;
-    }[] = [
-        { isClicked: false, name: "Water Bottle", image: "waterBottle.png" },
-        { isClicked: false, name: "Energy Drink", image: "energyDrink.png" },
-        { isClicked: false, name: "Electrolytes", image: "mixedNuts.png" },
-        { isClicked: false, name: "Protein Bar", image: "energyBar.png" },
-        { isClicked: false, name: "Mixed Nuts", image: "peanut.png" },
-        { isClicked: false, name: "Canned Meat", image: "cannedMeat.png" },
-        { isClicked: false, name: "Chewing Gum", image: "chewingGum.png" },
-    ].map((a) => {
-        return { isClicked: false, name: a.name, image: new URL('@', import.meta.url).href + "/assets/images/equipment-items/" + a.image };
-    });
+const foodItems = [
+    { name: "Water Bottle", filename: "waterBottle.png" },
+    { name: "Energy Drink", filename: "energyDrink.png" },
+    { name: "Electrolytes", filename: "mixedNuts.png" }, // Filename mismatch in original? kept strictly as you sent
+    { name: "Protein Bar", filename: "energyBar.png" },
+    { name: "Mixed Nuts", filename: "peanut.png" },
+    { name: "Canned Meat", filename: "cannedMeat.png" },
+    { name: "Chewing Gum", filename: "chewingGum.png" },
+];
 
-
-
-export default {
+export default defineComponent({
     data() {
         return {
-            images: toExport
+            images: [] as { name: string; image: string; isClicked: boolean }[]
+        };
+    },
+    created() {
+        const savedImages = getImagesFromCookie();
+        this.images = foodItems.map((item) => {
+            const fullPath = new URL(`../../../assets/images/equipment-items/${item.filename}`, import.meta.url).href;
+            return {
+                name: item.name,
+                image: fullPath,
+                isClicked: savedImages.includes(fullPath)
+            };
+        });
+    },
+    methods: {
+        toggleImage(imageObj: any) {
+            addImageToCookie(imageObj.image);
+            imageObj.isClicked = !imageObj.isClicked;
         }
     }
-}
-
+});
 </script>
 <style module>
 .equipmentCheckBoxCheckedIcon {

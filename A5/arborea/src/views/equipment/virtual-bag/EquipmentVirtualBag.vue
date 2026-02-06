@@ -1,5 +1,8 @@
 <script lang="ts">
-import { getImages, getImagesFromCookie } from '@/util/ImageUtil';
+import { defineComponent, ref, onMounted, reactive } from 'vue';
+import { getImages, removeImageFromCookie } from '@/util/ImageUtil';
+import BaseBottomBar from '@/views/components/BaseBottomBar.vue';
+
 interface ImageItem {
     src: string;
     style: string;
@@ -10,51 +13,69 @@ interface ImageItem {
 }
 
 
-export default {
-    data() {
-        return {
-            images: [] as ImageItem[],
-            collectedCount: 0
-        }
-    },
-    mounted() {
-        const loadedImages = getImages();
-        this.images = loadedImages.map(img => ({
-            src: img.src,
-            style: img.style,
-            visible: true,
-            isFloating: false,
-            targetX: 0,
-            targetY: 0
-        }));
-    },
-    methods: {
-        floatToBag(index: number, event: MouseEvent) {
-            const item = this.images[index];
+export default defineComponent({
+    components: { BaseBottomBar },
+    setup() {
+        // We use a ref to access the DOM element safely
+        const bagImageRef = ref<HTMLElement | null>(null);
+        const images = ref<ImageItem[]>([]);
+        const collectedCount = ref(0);
+
+        onMounted(() => {
+            const loadedImages = getImages();
+            images.value = loadedImages.map(img => ({
+                src: img.src,
+                style: img.style,
+                visible: true,
+                isFloating: false,
+                targetX: 0,
+                targetY: 0
+            }));
+        });
+
+        const floatToBag = (index: number, event: MouseEvent) => {
+            const item = images.value[index];
+
+            if (!item) return;
+
             if (!item.visible || item.isFloating) return;
 
-            const bagElement = document.querySelector('#bag img') as HTMLElement;
             const itemElement = event.target as HTMLElement;
+            const bagElement = bagImageRef.value;
 
             if (!bagElement || !itemElement) return;
 
             const bagRect = bagElement.getBoundingClientRect();
             const itemRect = itemElement.getBoundingClientRect();
 
-            // Calculate distance to bag center
-            item.targetX = bagRect.left + bagRect.width / 2 - itemRect.left - itemRect.width / 2;
-            item.targetY = bagRect.top + bagRect.height / 2 - itemRect.top - itemRect.height / 2;
+            // Calculate center-to-center distance
+            const bagCenterX = bagRect.left + (bagRect.width / 2);
+            const bagCenterY = bagRect.top + (bagRect.height / 2);
+            const itemCenterX = itemRect.left + (itemRect.width / 2);
+            const itemCenterY = itemRect.top + (itemRect.height / 2);
+
+            item.targetX = bagCenterX - itemCenterX;
+            item.targetY = bagCenterY - itemCenterY;
+
+            removeImageFromCookie(item.src);
 
             item.isFloating = true;
 
-            // Remove item after animation completes
+            // Wait for CSS transition (2s) then hide
             setTimeout(() => {
                 item.visible = false;
-                this.collectedCount++;
-            }, 1500);
-        }
+                collectedCount.value++;
+            }, 1500); // 1.5s matches closely with the animation
+        };
+
+        return {
+            images,
+            collectedCount,
+            bagImageRef,
+            floatToBag
+        };
     }
-}
+});
 </script>
 <template>
     <div :class="$style.equipmentVirtualBag">
@@ -90,14 +111,11 @@ export default {
                 }" alt="" @click="floatToBag(index, $event)" />
         </div>
         <div id="bag">
-            <img :class="$style.image21Icon" src="@/assets/images/equipment-items/backpack.png" alt="" />
+            <img ref="bagImageRef" :class="$style.image21Icon" src="@/assets/images/equipment-items/backpack.png" alt="" />
             <!--<span v-if="collectedCount > 0" :class="$style.bagCounter" style="visibility:hidden">{{ collectedCount }}</span>-->
         </div>
     </div>
 </template>
-<script setup lang="ts">
-import BaseBottomBar from '@/views/components/BaseBottomBar.vue';
-</script>
 
 <style lang="css" scoped>
 .floatingItem {

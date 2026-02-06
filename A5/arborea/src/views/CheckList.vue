@@ -132,7 +132,8 @@
   	
   	function onTextContentTitleClick() {
     		// Add your code here
-  	}</script>
+  	}
+</script>
 <style  module>.equipmentWeather {
   	width: 100%;
   	height: 852px;

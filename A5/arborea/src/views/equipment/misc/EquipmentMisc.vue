@@ -31,86 +31,19 @@
             </RouterLink>
         </div>
         <div :class="$style.toBringList">
-            <!--<div :class="$style.listItem">
-                <img :class="$style.equipmentCheckBoxIcon" alt="" />
-                <div :class="$style.equipmentDescriptionAndIcon">
-                    <div :class="$style.textContentTitle6">
-                        <div :class="$style.title3">Torch</div>
-                    </div>
-                </div>
-                <img :class="$style.image11Icon" alt="" />
-            </div>
-            <div :class="$style.listItem">
-                <img :class="$style.equipmentCheckBoxIcon" alt="" />
-                <div :class="$style.equipmentDescriptionAndIcon">
-                    <div :class="$style.textContentTitle6">
-                        <div :class="$style.title3">Whistle</div>
-                    </div>
-                </div>
-                <img :class="$style.image11Icon" alt="" />
-            </div>
-            <div :class="$style.listItem">
-                <img :class="$style.equipmentCheckBoxIcon" alt="" />
-                <div :class="$style.equipmentDescriptionAndIcon">
-                    <div :class="$style.textContentTitle6">
-                        <div :class="$style.title3">GPS</div>
-                    </div>
-                </div>
-                <img :class="$style.image11Icon" alt="" />
-            </div>
-            <div :class="$style.listItem">
-                <img :class="$style.equipmentCheckBoxIcon" alt="" />
-                <div :class="$style.equipmentDescriptionAndIcon">
-                    <div :class="$style.textContentTitle6">
-                        <div :class="$style.title3">Compass</div>
-                    </div>
-                </div>
-                <img :class="$style.image11Icon" alt="" />
-            </div>
-            <div :class="$style.listItem">
-                <img :class="$style.equipmentCheckBoxIcon" alt="" />
-                <div :class="$style.equipmentDescriptionAndIcon">
-                    <div :class="$style.textContentTitle6">
-                        <div :class="$style.title3">Watch</div>
-                    </div>
-                </div>
-                <img :class="$style.image11Icon" alt="" />
-            </div>
-            <div :class="$style.listItem">
-                <img :class="$style.equipmentCheckBoxIcon" alt="" />
-                <div :class="$style.equipmentDescriptionAndIcon">
-                    <div :class="$style.textContentTitle6">
-                        <div :class="$style.title3">Bug repellent</div>
-                    </div>
-                </div>
-                <img :class="$style.image11Icon" alt="" />
-            </div>
-            <div :class="$style.listItem">
-                <img :class="$style.equipmentCheckBoxIcon" alt="" />
-                <div :class="$style.equipmentDescriptionAndIcon">
-                    <div :class="$style.textContentTitle6">
-                        <div :class="$style.title3">Medkit</div>
-                    </div>
-                </div>
-                <img :class="$style.image11Icon" alt="" />
-            </div>
-            <div :class="$style.listItem">
-                <img :class="$style.equipmentCheckBoxIcon" alt="" />
-                <div :class="$style.equipmentDescriptionAndIcon">
-                    <div :class="$style.textContentTitle6">
-                        <div :class="$style.title3">Pager</div>
-                    </div>
-                </div>
-                <img :class="$style.image11Icon" alt="" />
-            </div>
-            -->
             <div :class="$style.listItem" v-for="(image, index) in images" :key="index">
-                <img v-if="!image.isClicked" :class="$style.equipmentCheckBoxIcon" alt=""
+                <img v-if="!image.isClicked" 
+                    :class="$style.equipmentCheckBoxIcon" 
+                    alt=""
                     src="@/assets/images/checkbox.svg"
-                    @click.self="addImageToCookie(image.image); image.isClicked = !image.isClicked" />
-                <img v-else :class="$style.equipmentCheckBoxCheckedIcon" alt=""
+                    @click.self="toggleImage(image)" 
+                />
+                <img v-else 
+                    :class="$style.equipmentCheckBoxCheckedIcon" 
+                    alt=""
                     src="@/assets/images/checkbox-checked.png"
-                    @click.self="addImageToCookie(image.image); image.isClicked = !image.isClicked" />
+                    @click.self="toggleImage(image)" 
+                />
 
                 <div :class="$style.equipmentDescriptionAndIcon">
                     <div :class="$style.textContentTitle5">
@@ -163,40 +96,44 @@
         </div>
     </div>
 </template>
-<script setup lang="ts">
-import { addImageToCookie } from '@/util/ImageUtil';
-console.log("setup");
-</script>
 <script lang="ts">
-console.log("script");
+import { defineComponent } from 'vue';
+import { addImageToCookie, getImagesFromCookie } from '@/util/ImageUtil';
 
-const toExport:
-    {
-        name: string;
-        image: string;
-        isClicked: boolean;
-    }[] = [
-        { isClicked: false, name: "Torch", image: "torchlight.png" },
-        { isClicked: false, name: "Whistle", image: "whistle.png" },
-        { isClicked: false, name: "GPS", image: "gps.png" },
-        { isClicked: false, name: "Compass", image: "compass.png" },
-        { isClicked: false, name: "Watch", image: "watch.png" },
-        { isClicked: false, name: "Bug repellent", image: "bug-repellent.png" },
-        { isClicked: false, name: "Medkit", image: "medkit.png" },
-    ].map((a) => {
-        return { isClicked: false, name: a.name, image: new URL('@', import.meta.url).href + "/assets/images/equipment-items/" + a.image };
-    });
+const miscItems = [
+    { name: "Torch", filename: "torchlight.png" },
+    { name: "Whistle", filename: "whistle.png" },
+    { name: "GPS", filename: "gps.png" },
+    { name: "Compass", filename: "compass.png" },
+    { name: "Watch", filename: "watch.png" },
+    { name: "Bug repellent", filename: "bug-repellent.png" },
+    { name: "Medkit", filename: "medkit.png" },
+];
 
-
-
-export default {
+export default defineComponent({
     data() {
         return {
-            images: toExport
+            images: [] as { name: string; image: string; isClicked: boolean }[]
+        };
+    },
+    created() {
+        const savedImages = getImagesFromCookie();
+        this.images = miscItems.map((item) => {
+            const fullPath = new URL(`../../../assets/images/equipment-items/${item.filename}`, import.meta.url).href;
+            return {
+                name: item.name,
+                image: fullPath,
+                isClicked: savedImages.includes(fullPath)
+            };
+        });
+    },
+    methods: {
+        toggleImage(imageObj: any) {
+            addImageToCookie(imageObj.image);
+            imageObj.isClicked = !imageObj.isClicked;
         }
     }
-}
-
+});
 </script>
 <style module>
 .equipmentCheckBoxCheckedIcon {
