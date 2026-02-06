@@ -14,7 +14,7 @@ import type { RouterLink } from 'vue-router'
                 <div :class="$style.groupChild" />
                 <div :class="$style.textContentHeading">
                     <div :class="$style.heading">Bivouac</div>
-                    <div :class="$style.subheading">Look for bivacchi.</div>
+                    <div :class="$style.subheading">Look for bivouac.</div>
                 </div>
                 <img :class="$style.mynauilocationHomeSolidIcon" src="@/assets/images/menu-items/bivouac.svg" alt="" />
             </div>
