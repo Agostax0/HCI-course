@@ -31,85 +31,19 @@
             </RouterLink>
         </div>
         <div :class="$style.toBringList">
-            <!--<div :class="$style.listItem">
-                <img :class="$style.equipmentCheckBoxIcon" alt="" src="@/assets/images/checkbox.svg" />
-                <div :class="$style.equipmentDescriptionAndIcon">
-                    <div :class="$style.textContentTitle5">
-                        <div :class="$style.title5">Umbrella</div>
-                    </div>
-                </div>
-                <img :class="$style.image11Icon" alt="" src="@/assets/images/equipment-items/umbrella.svg" />
-            </div>
-            <div :class="$style.listItem">
-                <img :class="$style.equipmentCheckBoxIcon" alt="" />
-                <div :class="$style.equipmentDescriptionAndIcon">
-                    <div :class="$style.textContentTitle5">
-                        <div :class="$style.title5">Strawhat</div>
-                    </div>
-                </div>
-                <img :class="$style.image11Icon" alt="" src="@/assets/images/equipment-items/strawhat.svg" />
-            </div>
-            <div :class="$style.listItem">
-                <img :class="$style.equipmentCheckBoxIcon" alt="" />
-                <div :class="$style.equipmentDescriptionAndIcon">
-                    <div :class="$style.textContentTitle5">
-                        <div :class="$style.title5">Raincoat</div>
-                    </div>
-                </div>
-                <img :class="$style.image11Icon" alt="" src="@/assets/images/equipment-items/umbrella.svg" />
-            </div>
-            <div :class="$style.listItem">
-                <img :class="$style.equipmentCheckBoxIcon" alt="" />
-                <div :class="$style.equipmentDescriptionAndIcon">
-                    <div :class="$style.textContentTitle5">
-                        <div :class="$style.title5">Gloves</div>
-                    </div>
-                </div>
-                <img :class="$style.image11Icon" alt="" />
-            </div>
-            <div :class="$style.listItem">
-                <img :class="$style.equipmentCheckBoxIcon" alt="" />
-                <div :class="$style.equipmentDescriptionAndIcon">
-                    <div :class="$style.textContentTitle5">
-                        <div :class="$style.title5">Snow goggles</div>
-                    </div>
-                </div>
-                <img :class="$style.image11Icon" alt="" />
-            </div>
-            <div :class="$style.listItem">
-                <img :class="$style.equipmentCheckBoxIcon" alt="" />
-                <div :class="$style.equipmentDescriptionAndIcon">
-                    <div :class="$style.textContentTitle5">
-                        <div :class="$style.title5">SPF cream</div>
-                    </div>
-                </div>
-                <img :class="$style.image11Icon" alt="" />
-            </div>
-            <div :class="$style.listItem">
-                <img :class="$style.equipmentCheckBoxIcon" alt="" />
-                <div :class="$style.equipmentDescriptionAndIcon">
-                    <div :class="$style.textContentTitle5">
-                        <div :class="$style.title5">Walking cane</div>
-                    </div>
-                </div>
-                <img :class="$style.image11Icon" alt="" />
-            </div>
-            <div :class="$style.listItem">
-                <img :class="$style.equipmentCheckBoxIcon" alt="" />
-                <div :class="$style.equipmentDescriptionAndIcon">
-                    <div :class="$style.textContentTitle5">
-                        <div :class="$style.title5">Snow shoes</div>
-                    </div>
-                </div>
-                <img :class="$style.image11Icon" alt="" />
-            </div>-->
             <div :class="$style.listItem" v-for="(image, index) in images" :key="index">
-                <img v-if="!image.isClicked" :class="$style.equipmentCheckBoxIcon" alt=""
+                <img v-if="!image.isClicked" 
+                    :class="$style.equipmentCheckBoxIcon" 
+                    alt=""
                     src="@/assets/images/checkbox.svg"
-                    @click.self="addImageToCookie(image.image); image.isClicked = !image.isClicked" />
-                <img v-else :class="$style.equipmentCheckBoxCheckedIcon" alt=""
+                    @click="toggleImage(image)"
+                />
+                <img v-else 
+                    :class="$style.equipmentCheckBoxCheckedIcon" 
+                    alt=""
                     src="@/assets/images/checkbox-checked.png"
-                    @click.self="addImageToCookie(image.image); image.isClicked = !image.isClicked" />
+                    @click="toggleImage(image)"
+                    />
 
                 <div :class="$style.equipmentDescriptionAndIcon">
                     <div :class="$style.textContentTitle5">
@@ -161,38 +95,50 @@
         </div>
     </div>
 </template>
-<script setup lang="ts">
-import { addImageToCookie } from '@/util/ImageUtil';
-</script>
 <script lang="ts">
+import { defineComponent } from 'vue';
+import { addImageToCookie, getImagesFromCookie } from '@/util/ImageUtil';
 
-const toExport:
-    {
-        name: string;
-        image: string;
-        isClicked: boolean;
-    }[] = [
-        { isClicked: false, name: "Umbrella", image: "umbrella.svg" },
-        { isClicked: false, name: "Strawhat", image: "strawhat.svg" },
-        { isClicked: false, name: "Raincoat", image: "raincoat.svg" },
-        { isClicked: false, name: "Gloves", image: "gloves.svg" },
-        { isClicked: false, name: "Snow Goggles", image: "snowGoggles.svg" },
-        { isClicked: false, name: "SPF Cream", image: "spfCream.svg" },
-        { isClicked: false, name: "Walking Cane", image: "walkingCane.svg" },
-        { isClicked: false, name: "Snow Shoes", image: "snowShoes.svg" },
-    ].map((a) => {
-        return { isClicked: false, name: a.name, image: new URL('@', import.meta.url).href + "/assets/images/equipment-items/" + a.image };
-    });
+const equipmentItems = [
+    { name: "Umbrella", filename: "umbrella.svg" },
+    { name: "Strawhat", filename: "strawhat.svg" },
+    { name: "Raincoat", filename: "raincoat.svg" },
+    { name: "Gloves", filename: "gloves.svg" },
+    { name: "Snow Goggles", filename: "snowGoggles.svg" },
+    { name: "SPF Cream", filename: "spfCream.svg" },
+    { name: "Walking Cane", filename: "walkingCane.svg" },
+    { name: "Snow Shoes", filename: "snowShoes.svg" },
+];
 
-
-
-export default {
+export default defineComponent({
     data() {
         return {
-            images: toExport
+            images: [] as { name: string; image: string; isClicked: boolean }[]
+        };
+    },
+    created() {
+        const savedImages = getImagesFromCookie();
+
+        // 3. Build the 'images' list by mapping the raw data
+        this.images = equipmentItems.map((item) => {
+            const fullPath = new URL(`../../../assets/images/equipment-items/${item.filename}`, import.meta.url).href;
+
+            return {
+                name: item.name,
+                image: fullPath,
+                // THE FIX: Check if this full path exists in the saved cookies
+                isClicked: savedImages.includes(fullPath)
+            };
+        });
+    },
+    methods: {
+        toggleImage(imageObj: any) {
+            addImageToCookie(imageObj.image);
+            imageObj.isClicked = !imageObj.isClicked;
         }
     }
-}
+});
+
 
 </script>
 <style module>
